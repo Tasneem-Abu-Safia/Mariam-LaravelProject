@@ -13,10 +13,23 @@
     <link  rel="stylesheet"  href="{{asset('css/font-awesome.css') }}" >
     <link  rel="stylesheet"  href="{{asset('css/owl.carousel.min.css') }}" >
     <link  rel="stylesheet"  href="{{asset('css/owl.theme.default.min.css') }}">
-
     <link type="text/css" rel="stylesheet"   href="{{asset('css/animate.css') }}"  />
-
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}" >
+
+@if (app()->getLocale() == 'ar')
+
+        <link href="https://fonts.googleapis.com/css?family=Cairo:400,700" rel="stylesheet">
+
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/rtl.css') }}" >
+        <link  rel="stylesheet"  type="text/css" href="{{asset('css/responsive.css') }}" >
+
+
+    @else
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+    @endif
+
+
 
 @yield('css')
 
@@ -37,7 +50,28 @@
         </div>
         <div class="mmenu">
             <ul>
-                @yield('mobile-menu')
+                <li class="active"><a href='{{URL('publicsite/home')}}'>Home</a></li>
+                <li><a href="" rel="m_PageScroll2id">About</a></li>
+                <li><a href="" rel="m_PageScroll2id">Curriculum</a></li>
+                <li><a href="" rel="m_PageScroll2id">Team</a></li>
+                @yield('Blogs')
+                <li><a href="" rel="m_PageScroll2id">Instructors</a></li>
+                <li><a href='{{URL('courses')}}'>Courses</a></li>
+                @yield('news')
+                <li><a href='{{URL('products')}}' rel="m_PageScroll2id">Products</a></li>
+                <li><a href="" rel="m_PageScroll2id">Connect</a></li>
+                <li><a href=""><ul>
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                <li>
+                                    <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                        {{ $properties['native'] }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul></a></li>
+                 @yield('register')
+                <li class="sign-in"><a href="">Sign in</a></li>
+
 
             </ul>
         </div>
@@ -48,13 +82,43 @@
 <!--mobile-menu-->
 
 <div class="main-wrapper">
-    <header id="header">
+    <header id="header" @yield('check_profile_header')>
         <div class="container">
             <div class="logo-site">
-                <a href="#"><img src="{{asset('images/logo.svg')}}" alt="" class="img-responsive"></a>
+                <a href='{{URL('/')}}'><img src="{{asset('images/logo.svg')}}" alt="" class="img-responsive"></a>
             </div>
             <ul class="main_menu clearfix">
-               @yield('header')
+                <li class="active"><a href='{{URL('publicsite/home')}}'>Home</a></li>
+                <li><a href='{{URL('/')}}#about' rel="m_PageScroll2id">About</a></li>
+                <li><a href='{{URL('/')}}#curriculum' rel="m_PageScroll2id">Curriculum</a></li>
+                <li><a href='{{URL('/')}}#team' rel="m_PageScroll2id">Team</a></li>
+                @yield('HBlogs')
+                <li><a href='{{URL('/')}}#instructors' rel="m_PageScroll2id">Instructors</a></li>
+                <li><a href='{{URL('courses')}}'>Courses</a></li>
+                @yield('Hnews')
+                <li><a href='{{URL('products')}}' rel="m_PageScroll2id">Products</a></li>
+                <li><a href='{{URL('/')}}#contact' rel="m_PageScroll2id">Connect</a></li>
+                <li class="dropdown tasks-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-flag-o"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            {{--<!-- inner menu: contains the actual data -->--}}
+                            <ul class="menu">
+                                @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                    <li>
+                                        <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                @yield('Hregister')
+                @yield('Hsign_in')
+                @yield('header')
             </ul>
             <button type="button" class="hamburger is-closed">
                 <span class="hamb-top"></span>
@@ -79,9 +143,9 @@
                 </div>
                 <div class="col-md-6">
                     <ul class="ft-menu">
-                        <li><a href="faq.html">Faq's</a></li>
-                        <li><a href="privacy.html">Privacy Policy</a></li>
-                        <li><a href="terms.html">Terms & Conditions</a></li>
+                        <li><a href="">Faq's</a></li>
+                        <li><a href="">Privacy Policy</a></li>
+                        <li><a href="">Terms & Conditions</a></li>
                     </ul>
                 </div>
             </div>
@@ -89,6 +153,13 @@
     </footer>
     <!--footer-->
 </div>
+<script src="{{URL::asset('js/popper.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('js/owl.carousel.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('js/jquery.malihu.PageScroll2id.min.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('js/wow.js')}}" type="text/javascript"></script>
+<script src="{{URL::asset('js/script.js')}}" type="text/javascript"></script>
+
 @yield('script')
 
 </body>
